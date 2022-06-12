@@ -5,7 +5,7 @@
         <meta http-equiv="x-ua-compatible" content="ie=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noindex">
-        <title>Do notation in pattern match [GHC-6446] — Haskell Error Index</title>
+        <title>Too many type arguments in constructor pattern [GHC-01629] — Haskell Error Index</title>
         <link rel="stylesheet" href="../../css/default.css" />
         <link rel="stylesheet" href="../../css/highlight.css">
         <script src="../../js/highlight.min.js"></script>
@@ -29,19 +29,20 @@
               
                 <a href="../../messages/index.html">Messages</a>&nbsp;»
               
-              Do notation in pattern match [GHC-6446]
+              Too many type arguments in constructor pattern [GHC-01629]
             </nav>
-            <h1>Do notation in pattern match [GHC-6446]</h1>
+            <h1>Too many type arguments in constructor pattern [GHC-01629]</h1>
             
 
 
-<p>When pattern matching, <code>do</code> blocks are not allowed as expressions to be pattern matched against.</p>
-<p>Instead, either match on a variable within the <code>do</code> block, or on the value the <code>do</code> block itself evaluates to.</p>
+<p>Every type application has to be “consumed” by a type variable in the
+corresponding type. Just as it is an error to pass more than one argument to <code>putStrLn</code>, it is also an error to apply more types than there are
+type variables in a type. For instance, if a type has only 1 type parameter (e.g. <code>Maybe a</code>), we can only apply 1 type argument (e.g. applying <code>@Int</code> to produce <code>Maybe Int</code>); there is no unbound type parameter present for further applications.</p>
 
 <h2>Examples</h2>
 <ul>
 
-<li><a href="../../messages/GHC-6446/example1/index.html">Do notation in pattern match</a></li>
+<li><a href="../../messages/GHC-01629/example1/index.html">Too many type arguments in constructor pattern</a></li>
 
 </ul>
 

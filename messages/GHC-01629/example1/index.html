@@ -5,7 +5,7 @@
         <meta http-equiv="x-ua-compatible" content="ie=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noindex">
-        <title>Do notation in pattern match — Haskell Error Index</title>
+        <title>Too many type arguments in constructor pattern — Haskell Error Index</title>
         <link rel="stylesheet" href="../../../css/default.css" />
         <link rel="stylesheet" href="../../../css/highlight.css">
         <script src="../../../js/highlight.min.js"></script>
@@ -29,43 +29,49 @@
               
                 <a href="../../../messages/index.html">Messages</a>&nbsp;»
               
-                <a href="../../../messages/GHC-6446/index.html">Do notation in pattern match [GHC-6446]</a>&nbsp;»
+                <a href="../../../messages/GHC-01629/index.html">Too many type arguments in constructor pattern [GHC-01629]</a>&nbsp;»
               
-              Do notation in pattern match
+              Too many type arguments in constructor pattern
             </nav>
-            <h1>Do notation in pattern match</h1>
-            <p>When pattern matching, <code>do</code> expressions are not allowed as patterns to be matched against.</p>
+            <h1>Too many type arguments in constructor pattern</h1>
+            <p>The <code>@Bool</code> is too much in this example. There is nothing to bind to it, so it is not allowed to be there.</p>
 <h2 id="error-message">Error Message</h2>
-<pre><code>DoNotationInPattern.hs:4:4: error: [GHC-6446]
-    do-notation in pattern
+<pre><code>TyArgs.hs:6:4: error: [GHC-01629]
+    • Too many type arguments in constructor pattern for ‘Just’
+      Expected no more than 1; got 2
+    • In the pattern: Just @Int @Bool x
+      In an equation for ‘f’: f (Just @Int @Bool x) = x
   |
-4 | f (do a; b; c;) = do
-  |    ^^^^^^^^^^</code></pre>
+6 | f (Just @Int @Bool x) = x
+  |    ^^^^^^^^^^^^^^^^^</code></pre>
 
 <table width="100%">
   
-  <tr><td colspan="2" class="filename"><pre>DoNotationInPattern.hs</pre></td></tr>
+  <tr><td colspan="2" class="filename"><pre>TyArgs.hs</pre></td></tr>
   <tr>
     <td width="50%" class="beforeafter">Before</td>
     <td width="50%" class="beforeafter">After</td>
   </tr>
   <tr>
     <td>
-      <pre><code class="language-haskell">module DoNotationInPattern where
+      <pre><code class="language-haskell">{-# LANGUAGE ScopedTypeVariables #-}
+{-# LANGUAGE TypeApplications #-}
+module TyArgs where
 
-f :: Monad m => m Int -> m Bool
-f (do a; b; c) = do
-    v <- c
-    return $ v == 2
+f :: Maybe Int -> Int
+f (Just @Int @Bool x) = x
+f Nothing = 10
 </code></pre>
     </td>
     <td>
-      <pre><code class="language-haskell">module DoNotationInPattern where
+      <pre><code class="language-haskell">{-# LANGUAGE ScopedTypeVariables #-}
+{-# LANGUAGE TypeApplications #-}
+module TyArgs where
 
-f :: Monad m => m Int -> m Bool
-f m = do
-    v <- m
-    return $ v == 2</code></pre>
+f :: Maybe Int -> Int
+f (Just @Int x) = x
+f Nothing = 10
+</code></pre>
     </td>
   </tr>
   
